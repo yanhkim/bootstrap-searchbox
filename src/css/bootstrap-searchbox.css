@@ -1,0 +1,38 @@
+.searchbox-box {
+    position: relative;
+    display: inline-block;
+}
+
+.searchbox-box .buttons-box {
+    position: absolute;
+    right: 13px;
+    top: 7px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    color: black;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.4;
+}
+
+.searchbox-box .buttons-box:hover {
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.7
+}
+
+.searchbox-box .buttons-box .close-button {
+    display: none;
+}
+
+.searchbox-box .buttons-box.searched {
+    top: 6px;
+}
+
+.searchbox-box .buttons-box.searched .search-button {
+    display: none;
+}
+
+.searchbox-box .buttons-box.searched .close-button {
+    display: inline-block;
+}

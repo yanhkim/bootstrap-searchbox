@@ -1,4 +1,4 @@
-describe('Searchbox', function() {
+describe('bootstrap-searchbox', function() {
     it('should reachable by $.fn.searchbox', function() {
         expect($.fn.searchbox).toBeDefined();
         expect(typeof $.fn.searchbox).toBe('function');
@@ -9,36 +9,50 @@ describe('Searchbox', function() {
         expect(foo instanceof jQuery).toBe(true);
     });
 
-    describe('after initializing', function() {
+    describe('it\'s markup', function() {
         var box;
 
         function setup() { return $('<input>').appendTo('body').searchbox(); }
-        function teardown(b) { b.remove(); }
+        function teardown(b) { b.searchbox('remove'); }
 
         beforeEach(function() {
             box = setup();
         });
 
-        it('should surround input with <div>', function() {
+        it('input should be surrounded by <div>', function() {
             expect(box.parent().is('div.searchbox-box')).toBe(true);
         });
 
-        it('and containing <div> should be inserted to same position of target', function() {
+        it('and <div> should be inserted to same position of the input', function() {
             var box = $('<input>').appendTo('body'),
                 before = box.parent();
 
             expect(box.searchbox().parent().parent().is(before)).toBe(true);
 
-            box.remove();
+            box.searchbox('remove');
         });
 
-        it('has overlay buntton container', function() {
-            expect(box.prev().is('span.buttons-container')).toBe(true);
+        it('has overlay bunttons', function() {
+            var cont = box.next();
+
+            expect(cont.is('span.buttons-box')).toBe(true);
+            expect(cont.has('span.search-button').size()).toEqual(1);
+            expect(cont.has('span.close-button').size()).toEqual(1);
+        });
+
+        it('should remove all elements that generated', function() {
+            var box = setup();
+            expect($('body').has(box).size()).toEqual(1);
+            expect($('body').has(box.parent()).size()).toEqual(1);
+
+            box.searchbox('remove');
+            expect($('body').has(box).size()).toEqual(0);
+            expect($('body').has(box.parent()).size()).toEqual(0);
         });
 
         afterEach(function() {
             teardown(box);
         });
-
     });
+
 });

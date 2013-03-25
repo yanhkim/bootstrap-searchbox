@@ -18,8 +18,13 @@
         init: function() {
             var parent = this.element.parent();
             $('<div class="searchbox-box">').appendTo(parent)
-                .append('<span class="buttons-container">')
-                .append(this.element);
+                .append(this.element)
+                .append($('<span class="buttons-box">')
+                    .append($('<span class="search-button icon-search">'))
+                    .append($('<span class="close-button">&times;</span>')));
+        },
+        remove: function() {
+            this.element.parent().remove().end();
         }
     };
 
