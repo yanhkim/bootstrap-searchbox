@@ -29,7 +29,8 @@ module.exports = function(grunt) {
         src: ['src/**/*.js'],
         options: {
           specs: ['test/specs/**/*.js'],
-          vendor: ['test/vendor/**/*.js']
+          vendor: ['test/vendor/**/*.js'],
+          styles: ['src/**/*.css']
         }
       },
       coverage: {
@@ -37,6 +38,7 @@ module.exports = function(grunt) {
         options: {
           specs: ['test/specs/**/*.js'],
           vendor: ['test/vendor/**/*.js'],
+          styles: ['src/**/*.css'],
           template: require('grunt-template-jasmine-istanbul'),
           templateOptions: {
             coverage: 'output/coverage/coverage.json',
