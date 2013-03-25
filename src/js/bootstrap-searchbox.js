@@ -11,10 +11,16 @@
     var Searchbox = function(element, options) {
         this.options = options;
         this.element = $(element);
+        this.init();
     };
 
     Searchbox.prototype = {
-
+        init: function() {
+            var parent = this.element.parent();
+            $('<div class="searchbox-box">').appendTo(parent)
+                .append('<span class="buttons-container">')
+                .append(this.element);
+        }
     };
 
     var old = $.fn.searchbox;
