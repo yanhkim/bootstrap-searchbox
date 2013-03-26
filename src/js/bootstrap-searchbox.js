@@ -13,6 +13,8 @@
         this.init(options);
     };
 
+    var ENTER = $.ui ? $.ui.keyCode.ENTER : 13;
+
     Searchbox.prototype = {
         init: function(options) {
             var el = this.element,
@@ -24,6 +26,10 @@
 
             search.on('click', function() { el.trigger('search'); });
             clear.on('click', function() { el.trigger('clear'); });
+            el.on('keydown', function(e) {
+                if (container.hasClass('result-mode')) return;
+                if (e.which === ENTER) el.trigger('search');
+            });
 
             if (options.mode === 'result') container.addClass('result-mode');
             if (options.val) el.val(options.val);

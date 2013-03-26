@@ -92,14 +92,28 @@ describe('bootstrap-searchbox', function() {
 
         it('should fire `search|clear` event when its search|clear button clicked', function() {
             var detect = 0;
-            box.on('search clear', function() {
-                detect++;
-            });
+            box.on('search clear', function() { detect++; });
 
             box.parent().find('.search-button').click();
             box.parent().find('.clear-button').click();
 
             expect(detect).toBe(2);
+        });
+
+        it('should fire `search` event when sense ENTER at search mode', function() {
+            var ENTER = $.ui ? $.ui.keyCode.ENTER : 13,
+                e = $.Event('keydown', { which: ENTER }),
+                alt = setup({ mode: 'result' }),
+                detect = 0;
+
+            box.on('search', function() { detect++; });
+            alt.on('search', function() { detect++; });
+
+            box.trigger(e);
+            expect(detect).toBe(1);
+
+            alt.trigger(e);
+            expect(detect).not.toBe(2);
         });
 
         it('should support mode changing', function() {
