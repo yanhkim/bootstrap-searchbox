@@ -3,12 +3,16 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         concat: {
-            options: {
-                separator: ';'
-            },
-            dist: {
+            js: {
+                options: {
+                    separator: ';'
+                },
                 src: ['src/**/*.js'],
                 dest: 'dist/<%= pkg.name %>.js'
+            },
+            css: {
+                src: ['src/**/*.css'],
+                dest: 'dist/<%= pkg.name %>.css'
             }
         },
         uglify: {
@@ -17,7 +21,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                    'dist/<%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
                 }
             }
         },
@@ -56,6 +60,15 @@ module.exports = function(grunt) {
                 'adjoining-classes': false
             },
             src: ['src/**/*.css']
+        },
+        cssmin: {
+            options: {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+            },
+            dist: {
+                src: ['<%= concat.css.dest %>'],
+                dest: 'dist/<%= pkg.name %>.min.css'
+            }
         }
     });
 
@@ -65,10 +78,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-csslint');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('test', ['jshint', 'csslint', 'jasmine:test']);
     grunt.registerTask('cover', ['jshint', 'csslint', 'jasmine:coverage']);
 
-    grunt.registerTask('default', ['jshint', 'csslint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'concat:js', 'uglify', 'csslint', 'concat:css', 'cssmin']);
 
 };
