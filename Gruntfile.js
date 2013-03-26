@@ -50,6 +50,12 @@ module.exports = function(grunt) {
         watch: {
             files: ['<%= jshint.files %>'],
             tasks: ['jshint', 'jasmine:test']
+        },
+        csslint: {
+            options: {
+                'adjoining-classes': false
+            },
+            src: ['src/**/*.css']
         }
     });
 
@@ -58,10 +64,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-csslint');
 
-    grunt.registerTask('test', ['jshint', 'jasmine:test']);
-    grunt.registerTask('cover', ['jshint', 'jasmine:coverage']);
+    grunt.registerTask('test', ['jshint', 'csslint', 'jasmine:test']);
+    grunt.registerTask('cover', ['jshint', 'csslint', 'jasmine:coverage']);
 
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'csslint', 'concat', 'uglify']);
 
 };
