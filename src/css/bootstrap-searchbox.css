@@ -21,18 +21,18 @@
     opacity: 0.7
 }
 
-.searchbox-box .buttons-box .close-button {
+.searchbox-box .buttons-box .clear-button {
     display: none;
 }
 
-.searchbox-box .buttons-box.searched {
+.searchbox-box.result-mode .buttons-box {
     top: 6px;
 }
 
-.searchbox-box .buttons-box.searched .search-button {
+.searchbox-box.result-mode .buttons-box .search-button {
     display: none;
 }
 
-.searchbox-box .buttons-box.searched .close-button {
+.searchbox-box.result-mode .buttons-box .clear-button {
     display: inline-block;
 }

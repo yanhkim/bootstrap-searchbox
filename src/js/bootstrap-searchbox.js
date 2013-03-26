@@ -9,22 +9,38 @@
 })(this, function($) {
 
     var Searchbox = function(element, options) {
-        this.options = options;
         this.element = $(element);
-        this.init();
+        this.init(options);
     };
 
     Searchbox.prototype = {
-        init: function() {
-            var parent = this.element.parent();
-            $('<div class="searchbox-box">').appendTo(parent)
-                .append(this.element)
-                .append($('<span class="buttons-box">')
-                    .append($('<span class="search-button icon-search">'))
-                    .append($('<span class="close-button">&times;</span>')));
+        init: function(options) {
+            var el = this.element,
+                parent = el.parent(),
+                container = $('<div class="searchbox-box">'),
+                buttons = $('<span class="buttons-box">'),
+                search = $('<span class="search-button icon-search">'),
+                clear = $('<span class="clear-button">&times;</span>');
+
+            search.on('click', function() { el.trigger('search'); });
+            clear.on('click', function() { el.trigger('clear'); });
+
+            if (options.mode === 'result') container.addClass('result-mode');
+            if (options.val) el.val(options.val);
+
+            container.append(el, buttons.append(search, clear)).appendTo(parent);
         },
         remove: function() {
-            this.element.parent().remove().end();
+            this.element.parent().remove();
+        },
+        'toggle-mode': function() {
+            this.element.parent().toggleClass('result-mode');
+        },
+        'search-mode': function() {
+            this.element.parent().removeClass('result-mode');
+        },
+        'result-mode': function() {
+            this.element.parent().addClass('result-mode');
         }
     };
 
@@ -34,7 +50,7 @@
         return this.each(function() {
             var $this = $(this),
                 data = $this.data('searchbox'),
-                options =typeof option === 'object' && option;
+                options = typeof option === 'object' && option;
             if (!data) $this.data('searchbox', (data = new Searchbox(this, options)));
             if (typeof option === 'string') data[option]();
         });
