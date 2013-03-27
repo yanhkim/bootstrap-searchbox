@@ -82,6 +82,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['jshint', 'csslint', 'jasmine:test']);
     grunt.registerTask('cover', ['jshint', 'csslint', 'jasmine:coverage']);
+    grunt.registerTask('testb', ['jshint', 'csslint', 'jasmine:test:build']);
+    grunt.registerTask('coverb', ['jshint', 'csslint', 'jasmine:coverage:build']);
 
     grunt.registerTask('default', ['jshint', 'concat:js', 'uglify', 'csslint', 'concat:css', 'cssmin']);
 
