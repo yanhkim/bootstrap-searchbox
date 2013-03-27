@@ -23,19 +23,25 @@
                 searchIcon = $('<span class="icon-search">'),
                 clearButton = $('<div class="clear-button">&times;</div>');
 
-            clearButton.on('click', function() { el.trigger('clear'); });
+            clearButton.on('click', $.proxy(this.clear, this));
             el.on('keydown', $.proxy(this.keydown, this));
             el.on('keyup', $.proxy(this.keyup, this));
+
+            container.append(el, searchIcon, clearButton);
 
             if (options.val) {
                 el.val(options.val);
                 this.showClear();
             }
 
-            container.append(el, searchIcon, clearButton).appendTo(parent);
+            container.appendTo(parent);
         },
         state: function() {
             return this.element.val() ? 'filled' : 'empty';
+        },
+        clear: function() {
+            this.hideClear();
+            this.element.val('').trigger('clear');
         },
         keydown: function(e) {
             if (e.which === ENTER) {
@@ -44,6 +50,11 @@
             }
         },
         keyup: function() {
+            if (this.state() === 'filled') {
+                this.showClear();
+            } else {
+                this.hideClear();
+            }
         },
         showClear: function() {
             this.element.parent().addClass('filled');
