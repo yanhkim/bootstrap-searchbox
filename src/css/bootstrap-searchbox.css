@@ -3,36 +3,38 @@
     display: inline-block;
 }
 
-.searchbox-box .buttons-box {
+.searchbox-box .search-query {
+    padding-left: 27px;
+    padding-right: 28px;
+}
+
+.searchbox-box .clear-button {
     position: absolute;
-    right: 13px;
-    top: 7px;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 20px;
-    color: black;
-    text-shadow: 0 1px 0 #ffffff;
-    opacity: 0.4;
-}
-
-.searchbox-box .buttons-box:hover {
-    text-decoration: none;
-    cursor: pointer;
-    opacity: 0.7
-}
-
-.searchbox-box .buttons-box .clear-button {
-    display: none;
-}
-
-.searchbox-box.result-mode .buttons-box {
     top: 6px;
-}
-
-.searchbox-box.result-mode .buttons-box .search-button {
+    right: 7px;
+    width: 18px;
+    height: 18px;
+    font-size: 21px;
+    color: white;
+    text-align: center;
+    background-color: black;
+    border-radius: 19px;
+    opacity: 0.3;
     display: none;
 }
 
-.searchbox-box.result-mode .buttons-box .clear-button {
+.searchbox-box .clear-button:hover {
+    cursor: pointer;
+    opacity: 0.6
+}
+
+.searchbox-box.filled .clear-button {
     display: inline-block;
+}
+
+.searchbox-box .icon-search {
+    position: absolute;
+    left: 9px;
+    top: 7px;
+    opacity: 0.5;
 }

@@ -8,45 +8,71 @@
     }
 })(this, function($) {
 
+    var ENTER = $.ui ? $.ui.keyCode.ENTER : 13;
+
     var Searchbox = function(element, options) {
         this.element = $(element);
         this.init(options);
     };
-
-    var ENTER = $.ui ? $.ui.keyCode.ENTER : 13;
 
     Searchbox.prototype = {
         init: function(options) {
             var el = this.element,
                 parent = el.parent(),
                 container = $('<div class="searchbox-box">'),
-                buttons = $('<span class="buttons-box">'),
-                search = $('<span class="search-button icon-search">'),
-                clear = $('<span class="clear-button">&times;</span>');
+                searchIcon = $('<span class="icon-search">'),
+                clearButton = $('<div class="clear-button">&times;</div>');
 
-            search.on('click', function() { el.trigger('search'); });
-            clear.on('click', function() { el.trigger('clear'); });
-            el.on('keydown', function(e) {
-                if (container.hasClass('result-mode')) return;
-                if (e.which === ENTER) el.trigger('search');
-            });
+            clearButton.on('click', $.proxy(this.clear, this));
+            el.on('keydown', $.proxy(this.keydown, this));
+            el.on('keyup', $.proxy(this.keyup, this));
 
-            if (options.mode === 'result') container.addClass('result-mode');
-            if (options.val) el.val(options.val);
+            container.append(el, searchIcon, clearButton);
 
-            container.append(el, buttons.append(search, clear)).appendTo(parent);
+            if (options.val) {
+                el.val(options.val);
+                this.showClear();
+            }
+
+            container.appendTo(parent);
+        },
+        state: function() {
+            return this.element.val() ? 'filled' : 'empty';
+        },
+        clear: function() {
+            this.hideClear();
+            this.element.val('').trigger('clear');
+        },
+        keydown: function(e) {
+            if (e.which === ENTER) {
+                this.element.trigger(this.state() === 'filled' ? 'search' : 'clear');
+                return false;
+            }
+        },
+        keyup: function() {
+            if (this.state() === 'filled') {
+                this.showClear();
+            } else {
+                this.hideClear();
+            }
+        },
+        showClear: function() {
+            this.element.parent().addClass('filled');
+        },
+        hideClear: function() {
+            this.element.parent().removeClass('filled');
+        },
+        show: function() {
+            this.element.parent().show();
+        },
+        hide: function() {
+            this.element.parent().hide();
+        },
+        toggle: function() {
+            this.element.parent().toggle();
         },
         remove: function() {
             this.element.parent().remove();
-        },
-        'toggle-mode': function() {
-            this.element.parent().toggleClass('result-mode');
-        },
-        'search-mode': function() {
-            this.element.parent().removeClass('result-mode');
-        },
-        'result-mode': function() {
-            this.element.parent().addClass('result-mode');
         }
     };
 
