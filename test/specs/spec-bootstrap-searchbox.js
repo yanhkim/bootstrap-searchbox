@@ -174,6 +174,19 @@ describe('bootstrap-searchbox', function() {
             expect(mode(box)).toBe('empty');
         });
 
+        it('should support show|hide functionality', function() {
+            var container = box.parent();
+            expect(container.is(':visible')).toBe(true);
+            box.searchbox('hide');
+            expect(container.is(':visible')).toBe(false);
+            box.searchbox('show');
+            expect(container.is(':visible')).toBe(true);
+            box.searchbox('toggle');
+            expect(container.is(':visible')).toBe(false);
+            box.searchbox('toggle');
+            expect(container.is(':visible')).toBe(true);
+        });
+
         afterEach(function() {
             teardown(box);
         });

@@ -62,6 +62,15 @@
         hideClear: function() {
             this.element.parent().removeClass('filled');
         },
+        show: function() {
+            this.element.parent().show();
+        },
+        hide: function() {
+            this.element.parent().hide();
+        },
+        toggle: function() {
+            this.element.parent().toggle();
+        },
         remove: function() {
             this.element.parent().remove();
         }
